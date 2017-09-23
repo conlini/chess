@@ -1,4 +1,4 @@
-package org.casestudy.target.chess.core;
+package org.casestudy.target.chess.constants;
 
 /**
  * Created by adityabhasin on 23/09/17.

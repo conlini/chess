@@ -1,8 +1,11 @@
 package org.casestudy.target.chess.core;
 
+import org.casestudy.target.chess.constants.PieceType;
+
 /**
  * Created by adityabhasin on 23/09/17.
  */
+// TODO: maybe have this as abstract and then subclasses for type of Move???
 public class Move {
 /*
 Move has
@@ -22,6 +25,24 @@ or castling
 
     private PieceType pieceType;
     private Square targetSquare;
+    private boolean isAttemptToCapture;
+    private boolean isAttemptToCheck;
+
+    public boolean isAttemptToCheck() {
+        return isAttemptToCheck;
+    }
+
+    public void setAttemptToCheck(boolean attemptToCheck) {
+        isAttemptToCheck = attemptToCheck;
+    }
+
+    public boolean isAttemptToCapture() {
+        return isAttemptToCapture;
+    }
+
+    public void setAttemptToCapture(boolean attemptToCapture) {
+        isAttemptToCapture = attemptToCapture;
+    }
 
     public PieceType getPieceType() {
         return pieceType;

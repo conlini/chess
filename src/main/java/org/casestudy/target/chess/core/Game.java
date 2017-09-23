@@ -1,19 +1,29 @@
 package org.casestudy.target.chess.core;
 
+import org.casestudy.target.chess.constants.PieceColor;
+import org.casestudy.target.chess.helpers.MoveDecoder;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by adityabhasin on 23/09/17.
  */
 public class Game {
-    private Board board;
-    private Player[] players; // do we care for this??
+
+    private final Board board;
+
     private PieceColor currentPlayer;
     private List<Move> moveList;
     private int fullMoveCount;
 
+    public Game() {
+        this.board =  new Board();
+        this.moveList = new ArrayList<Move>();
+    }
 
-    private void play() {
+
+    public void play() {
         // get move from command line
         /* decode move
             1. get piece type // default to Pawn --- we need a move decoder
@@ -26,8 +36,9 @@ public class Game {
 
         String movestring = ""; // this will be from command line
         Move move = MoveDecoder.decode(movestring);
-        if(board.isValidMove(move, currentPlayer)) {
-            board.move(move, currentPlayer);
+        Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
+        if(moveValidity.isValidMove()) {
+            board.move(move, currentPlayer, moveValidity.getTargetPiece());
             this.moveList.add(move);
             this.promoteNextPlayer();
             this.printGameFEN();
@@ -51,21 +62,28 @@ public class Game {
 
     private boolean canWhiteCastleKingSide() {
         // for  white, check if king has moved and king side rook has moved
-        return false;
+        return !board.hasKingMoved(PieceColor.White) && !board.hasKingSideRookMoved(PieceColor.White);
     }
 
     private boolean canWhiteCastleQueenSide() {
         // for  white, check if king has moved and queen side rook has moved
-        return false;
+        return !board.hasKingMoved(PieceColor.White) && !board.hasQueenSideRookMoved(PieceColor.White);
     }
 
     private boolean canBlackCastleKingSide() {
         // for  black, check if king has moved and king side rook has moved
-        return false;
+        return !board.hasKingMoved(PieceColor.Black) && !board.hasKingSideRookMoved(PieceColor.Black);
     }
 
     private boolean canBlackCastleQueenSide() {
         // for  white, check if king has moved and queen side rook has moved
-        return false;
+        return !board.hasKingMoved(PieceColor.Black) && !board.hasQueenSideRookMoved(PieceColor.Black);
+    }
+
+    public void initGame() {
+        this.board.init();
+        this.currentPlayer = PieceColor.White;
+        this.moveList.clear();
+        this.fullMoveCount = 0;
     }
 }

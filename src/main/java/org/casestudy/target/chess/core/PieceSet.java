@@ -1,5 +1,9 @@
 package org.casestudy.target.chess.core;
 
+import org.casestudy.target.chess.constants.PieceColor;
+import org.casestudy.target.chess.constants.PieceType;
+import org.casestudy.target.chess.pieces.Piece;
+
 import java.util.List;
 import java.util.Map;
 
