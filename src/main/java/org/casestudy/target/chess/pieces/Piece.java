@@ -8,43 +8,36 @@ import org.casestudy.target.chess.core.Square;
  * Created by adityabhasin on 23/09/17.
  */
 
-// TODO : add concrete classes for each type
 public abstract class Piece {
 
-    private final PieceType pieceType;
-    // TODO: does Piece care for PieceColor??
+    protected final PieceType pieceType;
     private final PieceColor pieceColor;
 
-    private boolean hasMoved;
-    private Square currentPlace;
+    protected boolean hasMoved;
+    protected Square currentPlace;
     private boolean isCaptured;
 
-    public Piece(PieceType pieceType, PieceColor pieceColor) {
+    public Piece(PieceType pieceType, PieceColor pieceColor, Square current) {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
+        this.currentPlace = current;
+        this.currentPlace.setOccupiedPiece(this);
     }
 
     public abstract boolean canMoveToSquare(Square targetSquare);
 
     public void markCaptured() {
         this.isCaptured = true;
+        this.currentPlace = null;
     }
 
     public boolean isHasMoved() {
         return hasMoved;
     }
 
-    public void setHasMoved(boolean hasMoved) {
-        this.hasMoved = hasMoved;
-    }
-
     public Square getCurrentPlace() {
 
         return currentPlace;
-    }
-
-    public void setCurrentPlace(Square currentPlace) {
-        this.currentPlace = currentPlace;
     }
 
     public PieceType getPieceType() {
@@ -61,5 +54,18 @@ public abstract class Piece {
 
     public void setCaptured(boolean captured) {
         isCaptured = captured;
+    }
+
+    public void moveTo(Square targetSquare) {
+        this.currentPlace = targetSquare;
+        this.hasMoved = true;
+    }
+
+    public String getPieceTypeCode() {
+        if(this.pieceColor == PieceColor.Black) {
+            return this.pieceType.getShortname().toLowerCase();
+        } else {
+            return this.pieceType.getShortname();
+        }
     }
 }

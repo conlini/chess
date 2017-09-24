@@ -10,21 +10,22 @@ import java.util.List;
  * Created by adityabhasin on 23/09/17.
  */
 
-//TODO: castling
+//TODO: 3. castling
 public class Game {
 
     private final Board board;
 
     private PieceColor currentPlayer;
-    private List<Move> moveList;
-    private int fullMoveCount;
+    private List<Move> moveList; // do we care for moveList if this is just a move validator app?
+    private int fullMoveCount = 1;
 
     public Game() {
-        this.board =  new Board();
+        this.board = new Board();
         this.moveList = new ArrayList<Move>();
     }
 
 
+    // TODO 1. write a main that starts the game. Perhaps we should wire in a MoveString provider
     public void play() {
         // get move from command line
         /* decode move
@@ -39,8 +40,8 @@ public class Game {
         String movestring = ""; // this will be from command line
         Move move = MoveDecoder.decode(movestring);
         Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
-        if(moveValidity.isValidMove()) {
-            board.move(move, currentPlayer, moveValidity.getTargetPiece());
+        if (moveValidity.isValidMove()) {
+            board.move((NormalMove) move, currentPlayer, moveValidity.getTargetPiece());
             this.moveList.add(move);
             this.promoteNextPlayer();
             this.printGameFEN();
@@ -52,11 +53,39 @@ public class Game {
     }
 
     private void printGameFEN() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.board.getBoardAsFEN());
+        builder.append(" ");
+        builder.append(this.currentPlayer.getColorCode());
+        builder.append(" ");
+        if (canBlackCastleKingSide() || canBlackCastleQueenSide() || canWhiteCastleKingSide() || canWhiteCastleQueenSide()) {
+            if (canWhiteCastleKingSide()) {
+                builder.append("K");
+            }
+            if (canWhiteCastleQueenSide()) {
+                builder.append("Q");
+            }
+            if (canBlackCastleKingSide()) {
+                builder.append("k");
+            }
+            if (canBlackCastleQueenSide()) {
+                builder.append("q");
+            }
+        } else {
+            builder.append("-");
+        }
+        builder.append(" ");
+        builder.append("-"); // en passant square
+        builder.append(" ");
+        builder.append(0);// half move clock
+        builder.append(" ");
+        builder.append(fullMoveCount);
+        System.out.println(builder.toString());
 
     }
 
     private void promoteNextPlayer() {
-        this.currentPlayer = currentPlayer == PieceColor.White? PieceColor.Black: PieceColor.White;
+        this.currentPlayer = currentPlayer == PieceColor.White ? PieceColor.Black : PieceColor.White;
         if (this.currentPlayer == PieceColor.Black) {
             this.fullMoveCount++;
         }
@@ -87,5 +116,6 @@ public class Game {
         this.currentPlayer = PieceColor.White;
         this.moveList.clear();
         this.fullMoveCount = 0;
+        this.printGameFEN();
     }
 }
