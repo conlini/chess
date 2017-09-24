@@ -1,5 +1,6 @@
 package org.casestudy.target.chess.core;
 
+import org.casestudy.target.chess.constants.CastlingSide;
 import org.casestudy.target.chess.constants.PieceType;
 
 /**
@@ -23,10 +24,29 @@ or castling
 
  */
 
+
     private PieceType pieceType;
     private Square targetSquare;
     private boolean isAttemptToCapture;
     private boolean isAttemptToCheck;
+    private boolean isCastling;
+    private CastlingSide castlingSide;
+
+    public boolean isCastling() {
+        return isCastling;
+    }
+
+    public void setCastling(boolean castling) {
+        isCastling = castling;
+    }
+
+    public CastlingSide getCastlingSide() {
+        return castlingSide;
+    }
+
+    public void setCastlingSide(CastlingSide castlingSide) {
+        this.castlingSide = castlingSide;
+    }
 
     public boolean isAttemptToCheck() {
         return isAttemptToCheck;

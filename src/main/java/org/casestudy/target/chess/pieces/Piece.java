@@ -46,4 +46,20 @@ public abstract class Piece {
     public void setCurrentPlace(Square currentPlace) {
         this.currentPlace = currentPlace;
     }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public PieceColor getPieceColor() {
+        return pieceColor;
+    }
+
+    public boolean isCaptured() {
+        return isCaptured;
+    }
+
+    public void setCaptured(boolean captured) {
+        isCaptured = captured;
+    }
 }

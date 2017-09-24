@@ -33,17 +33,22 @@ public class Board {
         4. Validate if the check is valid
         5. validate if the capture is valid
          */
-
+        // check if target square is occupied by the same color, if yes then dont bother computing canMove unless castling
+        if(move.getTargetSquare().getOccupiedPiece() != null && move.getTargetSquare().getOccupiedPiece().getPieceColor() == pieceColor) {
+            return new MoveValidity(false, null);
+        }
         PieceSet pieceSet = pieceSets.get(pieceColor);
         List<Piece> pieces = pieceSet.getPieces(move.getPieceType());
         List<Piece> possibleCandidates = new ArrayList<Piece>();
         for(Piece piece: pieces) {
+
             if (piece.canMoveToSquare(move.getTargetSquare())) {
                 possibleCandidates.add(piece);
             }
         }
         // assume for now that list has 1 item. We work out disambiguity later
         Piece currentPiece = possibleCandidates.get(0);
+
         if(isCheckValid(move, currentPiece, pieceColor) && isCaptureValid(move, currentPiece, pieceColor)) {
             return new MoveValidity(true, currentPiece);
         } else {
@@ -73,6 +78,7 @@ public class Board {
     }
 
     // TODO: Should move capture details like en passant and return that to the Game. Possible even return "Captured Piece Type info"
+    // TODO: castling
     public void move(Move move, PieceColor pieceColor, Piece targetPiece) {
         /*
         1. get target Piece
