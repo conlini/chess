@@ -1,11 +1,10 @@
 package org.casestudy.chess.core;
 
-import org.casestudy.chess.pieces.*;
 import org.casestudy.chess.constants.MoveType;
 import org.casestudy.chess.constants.MovementDirection;
 import org.casestudy.chess.constants.PieceColor;
 import org.casestudy.chess.constants.PieceType;
-import org.casestudy.target.chess.pieces.*;
+import org.casestudy.chess.pieces.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
