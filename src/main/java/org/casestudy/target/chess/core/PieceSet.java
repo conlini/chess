@@ -29,6 +29,7 @@ public class PieceSet {
         List<Piece> typePieces = this.pieces.get(piece.getPieceType());
         if(typePieces == null) {
             typePieces = new ArrayList<Piece>();
+            this.pieces.put(piece.getPieceType(), typePieces);
         }
         typePieces.add(piece);
     }

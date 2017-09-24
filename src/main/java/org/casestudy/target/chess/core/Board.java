@@ -7,6 +7,7 @@ import org.casestudy.target.chess.constants.PieceType;
 import org.casestudy.target.chess.pieces.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class Board {
 
-    private Square[][] places;
+    private Square[][] places = new Square[8][8];
     private Map<PieceColor, PieceSet> pieceSets;
     private PieceColor pieceOnTop; // we may not need this if we decide always black on top and init the pawn directions accordingly
 
@@ -45,6 +46,9 @@ public class Board {
                 if (piece.canMoveToSquare(move.getTargetSquare())) {
                     possibleCandidates.add(piece);
                 }
+            }
+            if(possibleCandidates.isEmpty()) {
+                return new MoveValidity(false, null);
             }
             // assume for now that list has 1 item. We work out disambiguity later
             Piece currentPiece = possibleCandidates.get(0);
@@ -125,6 +129,7 @@ public class Board {
             }
         }
         // init each piece and pieceSet
+        pieceSets = new HashMap<PieceColor, PieceSet>();
         PieceSet ps = new PieceSet(PieceColor.Black);
         pieceSets.put(PieceColor.Black, ps);
         ps.addPiece(new Rook(PieceColor.Black, places[0][0]));
@@ -142,6 +147,7 @@ public class Board {
 
         // white ps
         ps = new PieceSet(PieceColor.White);
+        pieceSets.put(PieceColor.White, ps);
         ps.addPiece(new Rook(PieceColor.White, places[7][0]));
         ps.addPiece(new Knight(PieceColor.White, places[7][1]));
         ps.addPiece(new Bishop(PieceColor.White, places[7][2]));

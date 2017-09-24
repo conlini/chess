@@ -18,14 +18,15 @@ public class Game {
     private PieceColor currentPlayer;
     private List<Move> moveList; // do we care for moveList if this is just a move validator app?
     private int fullMoveCount = 1;
+    private IMoveGenerator moveGenerator;
 
-    public Game() {
+    public Game(IMoveGenerator moveGenerator) {
         this.board = new Board();
+        this.moveGenerator = moveGenerator;
         this.moveList = new ArrayList<Move>();
     }
 
 
-    // TODO 1. write a main that starts the game. Perhaps we should wire in a MoveString provider
     public void play() {
         // get move from command line
         /* decode move
@@ -37,19 +38,22 @@ public class Game {
             5. update player status - promote next player
           */
 
-        String movestring = ""; // this will be from command line
-        Move move = MoveDecoder.decode(movestring);
-        Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
-        if (moveValidity.isValidMove()) {
-            board.move((NormalMove) move, currentPlayer, moveValidity.getTargetPiece());
-            this.moveList.add(move);
-            this.promoteNextPlayer();
-            this.printGameFEN();
-        } else {
-            // report error
+        String movestring = moveGenerator.getNextMove();
+        while(movestring != null) {
+            Move move = MoveDecoder.decode(movestring);
+            Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
+            if (moveValidity.isValidMove()) {
+                board.move((NormalMove) move, currentPlayer, moveValidity.getTargetPiece());
+                this.moveList.add(move);
+                this.promoteNextPlayer();
+                this.printGameFEN();
+
+            } else {
+                // report error
+                System.out.println("Invalid move");
+            }
+            movestring = moveGenerator.getNextMove();
         }
-
-
     }
 
     private void printGameFEN() {
@@ -86,8 +90,8 @@ public class Game {
 
     private void promoteNextPlayer() {
         this.currentPlayer = currentPlayer == PieceColor.White ? PieceColor.Black : PieceColor.White;
-        if (this.currentPlayer == PieceColor.Black) {
-            this.fullMoveCount++;
+        if (this.currentPlayer == PieceColor.White) {
+            this.fullMoveCount += 1;
         }
     }
 
@@ -115,7 +119,7 @@ public class Game {
         this.board.init();
         this.currentPlayer = PieceColor.White;
         this.moveList.clear();
-        this.fullMoveCount = 0;
+        this.fullMoveCount = 1;
         this.printGameFEN();
     }
 }
