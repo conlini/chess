@@ -1,6 +1,7 @@
 package org.casestudy.chess.main;
 
 import org.casestudy.chess.core.ConsoleMoveGenerator;
+import org.casestudy.chess.core.ConsoleOutputCollector;
 import org.casestudy.chess.core.Game;
 import org.casestudy.chess.core.IMoveGenerator;
 
@@ -10,8 +11,7 @@ import org.casestudy.chess.core.IMoveGenerator;
 public class Main {
 
     public static void main(String[] args) {
-        IMoveGenerator generator = new ConsoleMoveGenerator();
-        Game g = new Game(generator);
+        Game g = new Game(new ConsoleMoveGenerator(), new ConsoleOutputCollector());
         g.initGame();
         g.play();
     }

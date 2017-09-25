@@ -18,7 +18,7 @@ public class Pawn extends Piece {
 
     public boolean canMoveToSquare(Square targetSquare) {
         switch (direction) {
-            case Up: {
+            case Down: {
                 if(hasMoved) {
                     int[] ymoves = new int[]{1, 1, 1};
                     int[] xmoves = new int[]{0, -1, 1};
@@ -41,7 +41,7 @@ public class Pawn extends Piece {
                     return false;
                 }
             }
-            case Down: {
+            case Up: {
                 if(hasMoved) {
                     // x-1, y, x-1, y-1, x-1, y+1
                     int[] ymoves = new int[]{-1, -1, -1};

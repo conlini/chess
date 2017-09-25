@@ -19,10 +19,12 @@ public class Game {
     private List<Move> moveList; // do we care for moveList if this is just a move validator app?
     private int fullMoveCount = 1;
     private IMoveGenerator moveGenerator;
+    private IMoveOutCollector outputCollector;
 
-    public Game(IMoveGenerator moveGenerator) {
+    public Game(IMoveGenerator moveGenerator, IMoveOutCollector outputCollector) {
         this.board = new Board();
         this.moveGenerator = moveGenerator;
+        this.outputCollector = outputCollector;
         this.moveList = new ArrayList<Move>();
     }
 
@@ -84,7 +86,7 @@ public class Game {
         builder.append(0);// half move clock
         builder.append(" ");
         builder.append(fullMoveCount);
-        System.out.println(builder.toString());
+        this.outputCollector.collectOutput(builder.toString());
 
     }
 
