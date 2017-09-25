@@ -6,3 +6,4 @@ pending
 2. square[][] should be passed to "canMove" to verify for rook, queen, bishop if en-route square are not occupied
 3. fix "check" logic
 4. add castling logic
+5. throw unsupported move for disambiguity moves
