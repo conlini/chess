@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class Board {
 
-    private Square[][] places = new Square[8][8];
+    private Square[][] places = new Square[9][9];
     private Map<PieceColor, PieceSet> pieceSets;
     private PieceColor pieceOnTop; // we may not need this if we decide always black on top and init the pawn directions accordingly
 
@@ -43,7 +43,7 @@ public class Board {
             List<Piece> possibleCandidates = new ArrayList<Piece>();
             for (Piece piece : pieces) {
 
-                if (piece.canMoveToSquare(move.getTargetSquare())) {
+                if (!piece.isCaptured() && piece.canMoveToSquare(move.getTargetSquare())) {
                     possibleCandidates.add(piece);
                 }
             }
@@ -123,8 +123,9 @@ public class Board {
 
     public void init() {
         // init each square
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
+        for (int x = 1; x < 9; x++) {
+            places[x] = new Square[9];
+            for (int y = 1; y < 9; y++) {
                 places[x][y] = new Square(x, y);
             }
         }
@@ -132,43 +133,43 @@ public class Board {
         pieceSets = new HashMap<PieceColor, PieceSet>();
         PieceSet ps = new PieceSet(PieceColor.Black);
         pieceSets.put(PieceColor.Black, ps);
-        ps.addPiece(new Rook(PieceColor.Black, places[0][0]));
-        ps.addPiece(new Knight(PieceColor.Black, places[0][1]));
-        ps.addPiece(new Bishop(PieceColor.Black, places[0][2]));
-        ps.addPiece(new Queen(PieceColor.Black, places[0][3]));
-        ps.addPiece(new King(PieceColor.Black, places[0][4]));
-        ps.addPiece(new Bishop(PieceColor.Black, places[0][5]));
-        ps.addPiece(new Knight(PieceColor.Black, places[0][6]));
-        ps.addPiece(new Rook(PieceColor.Black, places[0][7]));
+        ps.addPiece(new Rook(PieceColor.Black, places[1][1]));
+        ps.addPiece(new Knight(PieceColor.Black, places[2][1]));
+        ps.addPiece(new Bishop(PieceColor.Black, places[3][1]));
+        ps.addPiece(new Queen(PieceColor.Black, places[4][1]));
+        ps.addPiece(new King(PieceColor.Black, places[5][1]));
+        ps.addPiece(new Bishop(PieceColor.Black, places[6][1]));
+        ps.addPiece(new Knight(PieceColor.Black, places[7][1]));
+        ps.addPiece(new Rook(PieceColor.Black, places[8][1]));
 
-        for (int i = 0; i < 8; i++) {
-            ps.addPiece(new Pawn(PieceColor.Black, MovementDirection.Down, places[1][i]));
+        for (int i = 1; i < 9; i++) {
+            ps.addPiece(new Pawn(PieceColor.Black, MovementDirection.Down, places[i][2]));
         }
 
         // white ps
         ps = new PieceSet(PieceColor.White);
         pieceSets.put(PieceColor.White, ps);
-        ps.addPiece(new Rook(PieceColor.White, places[7][0]));
-        ps.addPiece(new Knight(PieceColor.White, places[7][1]));
-        ps.addPiece(new Bishop(PieceColor.White, places[7][2]));
-        ps.addPiece(new Queen(PieceColor.White, places[7][3]));
-        ps.addPiece(new King(PieceColor.White, places[7][4]));
-        ps.addPiece(new Bishop(PieceColor.White, places[7][5]));
-        ps.addPiece(new Knight(PieceColor.White, places[7][6]));
-        ps.addPiece(new Rook(PieceColor.White, places[7][7]));
+        ps.addPiece(new Rook(PieceColor.White, places[1][8]));
+        ps.addPiece(new Knight(PieceColor.White, places[2][8]));
+        ps.addPiece(new Bishop(PieceColor.White, places[3][8]));
+        ps.addPiece(new Queen(PieceColor.White, places[4][8]));
+        ps.addPiece(new King(PieceColor.White, places[5][8]));
+        ps.addPiece(new Bishop(PieceColor.White, places[6][8]));
+        ps.addPiece(new Knight(PieceColor.White, places[7][8]));
+        ps.addPiece(new Rook(PieceColor.White, places[8][8]));
 
-        for (int i = 0; i < 8; i++) {
-            ps.addPiece(new Pawn(PieceColor.White, MovementDirection.Up, places[6][i]));
+        for (int i = 1; i < 9; i++) {
+            ps.addPiece(new Pawn(PieceColor.White, MovementDirection.Up, places[i][7]));
         }
     }
 
 
     public String getBoardAsFEN() {
         StringBuilder board = new StringBuilder();
-        for (int x = 0; x < 8; x++) {
+        for (int x = 1; x < 9; x++) {
             StringBuilder row = new StringBuilder();
             int emptySlots = 0;
-            for (int y = 0; y < 8; y++) {
+            for (int y = 1; y < 9; y++) {
                 if (places[x][y].getOccupiedPiece() == null) {
                     row.append(1);
                     emptySlots++;
@@ -181,7 +182,7 @@ public class Board {
             } else {
                 board.append(row.toString());
             }
-            if(x != 7) {
+            if(x != 8) {
                 board.append("/");
             }
         }

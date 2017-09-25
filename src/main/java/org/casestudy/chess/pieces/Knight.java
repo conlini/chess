@@ -2,6 +2,7 @@ package org.casestudy.chess.pieces;
 
 import org.casestudy.chess.constants.PieceColor;
 import org.casestudy.chess.constants.PieceType;
+import org.casestudy.chess.core.Move;
 import org.casestudy.chess.core.Square;
 
 /**
@@ -16,7 +17,8 @@ public class Knight extends Piece {
         int[] xmoves = new int[]{-2, -2, -1, -1, 1, 1, 2, 2};
         int[] ymoves = new int[]{1, -1, 2, -2, 2, -2, 1, -1};
         for (int i = 0; i < xmoves.length; i++) {
-            if (new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]).equals(targetSquare)) {
+            Square square = new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]);
+            if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
                 return true;
             }
         }

@@ -11,7 +11,7 @@ public class MoveUtil {
         Square currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentsquare.setX(currentsquare.getX() - 1);
         currentsquare.setY(currentsquare.getY() - 1);
-        while (currentsquare.getY() >= 0 && currentsquare.getX() >= 0) {
+        while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -24,7 +24,7 @@ public class MoveUtil {
         currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentsquare.setX(currentsquare.getX() - 1);
         currentsquare.setY(currentsquare.getY() + 1);
-        while (currentsquare.getY() < 8 && currentsquare.getX() >= 0) {
+        while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -37,7 +37,7 @@ public class MoveUtil {
         currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentsquare.setX(currentsquare.getX() + 1);
         currentsquare.setY(currentsquare.getY() + 1);
-        while (currentsquare.getY() < 8 && currentsquare.getX() < 8) {
+        while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -50,7 +50,7 @@ public class MoveUtil {
         currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentsquare.setX(currentsquare.getX() + 1);
         currentsquare.setY(currentsquare.getY() - 1);
-        while (currentsquare.getY() >= 0 && currentsquare.getX() < 80) {
+        while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -68,7 +68,7 @@ public class MoveUtil {
         // traverse left
         Square currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentSquare.setX(currentSquare.getX() - 1);
-        while (currentSquare.getX() >= 0) {
+        while (isValidSquare(currentSquare)) {
             if (currentSquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -79,7 +79,7 @@ public class MoveUtil {
         // traverse right
         currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentSquare.setX(currentSquare.getX() + 1);
-        while (currentSquare.getX() < 8) {
+        while (isValidSquare(currentSquare)) {
             if (currentSquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -90,7 +90,7 @@ public class MoveUtil {
         // traverse up
         currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentSquare.setY(currentSquare.getY() - 1);
-        while (currentSquare.getY() >= 0) {
+        while (isValidSquare(currentSquare)) {
             if (currentSquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -101,7 +101,7 @@ public class MoveUtil {
         // traverse down
         currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
         currentSquare.setY(currentSquare.getY() + 1);
-        while (currentSquare.getY() < 8) {
+        while (isValidSquare(currentSquare)) {
             if (currentSquare.equals(targetSquare)) {
                 return true;
             } else {
@@ -112,4 +112,11 @@ public class MoveUtil {
         return false;
     }
 
+
+    public static boolean isValidSquare(Square square) {
+        if ((square.getX()  >= 1 && square.getX() <= 8) && (square.getY() >= 1 && square.getY() <= 8)) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -41,7 +41,7 @@ public class Game {
           */
 
         String movestring = moveGenerator.getNextMove();
-        while(movestring != null) {
+        while (movestring != null) {
             Move move = MoveDecoder.decode(movestring);
             Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
             if (moveValidity.isValidMove()) {
@@ -52,7 +52,9 @@ public class Game {
 
             } else {
                 // report error
-                System.out.println("Invalid move");
+                this.outputCollector.collectOutput(String.format("Invalid Move. Player %s, Move %s", this.currentPlayer.getColorCode(), movestring));
+                // promote the player for now as we need to handle tests
+                this.promoteNextPlayer();
             }
             movestring = moveGenerator.getNextMove();
         }

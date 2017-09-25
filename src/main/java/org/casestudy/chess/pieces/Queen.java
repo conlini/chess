@@ -13,7 +13,7 @@ public class Queen extends Piece {
     }
 
     public boolean canMoveToSquare(Square targetSquare) {
-        return MoveUtil.checkMoveDiagonal(currentPlace, targetSquare) &&
+        return MoveUtil.checkMoveDiagonal(currentPlace, targetSquare) ||
                 MoveUtil.checkMoveLateral(currentPlace, targetSquare);
     }
 }

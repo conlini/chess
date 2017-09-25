@@ -50,7 +50,7 @@ Move has
 
 
     public NormalMove setAttemptToCheck(String attemptToCheck) {
-        if (attemptToCheck != null && attemptToCheck == "+") {
+        if (attemptToCheck != null && attemptToCheck.equals("+")) {
             this.isAttemptToCheck = true;
         } else {
             this.isAttemptToCheck = false;
@@ -60,7 +60,7 @@ Move has
     }
 
     public NormalMove setAttemptToCapture(String attemptToCapture) {
-        if (attemptToCapture != null && attemptToCapture == "x") {
+        if (attemptToCapture != null && attemptToCapture.equals("x")) {
             this.isAttemptToCapture = true;
         } else {
             this.isAttemptToCapture = false;
@@ -74,8 +74,9 @@ Move has
         return this;
     }
 
+    // TODO 1. this should be the actual square from the board either here or in the board.isValid/move
     public NormalMove setTargetSquare(String file, String rank) {
-        this.targetSquare = new Square(Integer.parseInt(rank), file.toCharArray()[0] - 'a');
+        this.targetSquare = new Square((file.toCharArray()[0] - 'a') + 1, Integer.parseInt(rank));
         return this;
     }
 }

@@ -23,7 +23,8 @@ public class Pawn extends Piece {
                     int[] ymoves = new int[]{1, 1, 1};
                     int[] xmoves = new int[]{0, -1, 1};
                     for (int i = 0; i < xmoves.length; i++) {
-                        if (new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]).equals(targetSquare)) {
+                        Square square = new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]);
+                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
                             return true;
                         }
                     }
@@ -34,7 +35,8 @@ public class Pawn extends Piece {
                     int[] ymoves = new int[]{1, 1, 1, 2};
                     int[] xmoves = new int[]{0, -1, 1,0};
                     for (int i = 0; i < xmoves.length; i++) {
-                        if (new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]).equals(targetSquare)) {
+                        Square square = new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]);
+                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
                             return true;
                         }
                     }
@@ -47,7 +49,8 @@ public class Pawn extends Piece {
                     int[] ymoves = new int[]{-1, -1, -1};
                     int[] xmoves = new int[]{0, -1, 1};
                     for (int i = 0; i < xmoves.length; i++) {
-                        if (new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]).equals(targetSquare)) {
+                        Square square = new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]);
+                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
                             return true;
                         }
                     }
@@ -57,7 +60,8 @@ public class Pawn extends Piece {
                     int[] ymoves = new int[]{-1, -1, -1, -2};
                     int[] xmoves = new int[]{0, -1, 1,0};
                     for (int i = 0; i < xmoves.length; i++) {
-                        if (new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]).equals(targetSquare)) {
+                        Square square = new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]);
+                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
                             return true;
                         }
                     }
