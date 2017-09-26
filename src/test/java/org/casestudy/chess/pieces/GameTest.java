@@ -60,7 +60,7 @@ public class GameTest {
                 "d4", "Bg4", "d4xe5", "Bxf3",
                 "Qxf3", "d6xe5", "Bc4", "Nf6", "Qb3", "Qe7",
                 "Nc3", "c6", "Bg5", "b5", "Nxb5", "c6xb5",
-                "Bxb5+", "Nd7");
+                "Bxb5+", "Nd7", "0-0-0");
         MockMoveOutCollector collector = new MockMoveOutCollector();
         Game g = new Game(generator, collector);
         g.initGame();
@@ -89,10 +89,12 @@ public class GameTest {
                 "rn2kb1r/p3qppp/2p2n2/1N2p1B1/2B1P3/1Q6/PPP2PPP/R3K2R b KQkq - 0 10",
                 "rn2kb1r/p3qppp/5n2/1p2p1B1/2B1P3/1Q6/PPP2PPP/R3K2R w KQkq - 0 10",
                 "rn2kb1r/p3qppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/R3K2R b KQkq - 0 11",
-                "r3kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/R3K2R w KQkq - 0 11"};
+                "r3kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/R3K2R w KQkq - 0 11",
+                "r3kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR3R b kq - 0 12"};
         for (int i = 0; i < outputs.length; i++) {
             Assert.assertEquals(outputs[i], collector.getOutputs().get(i));
         }
+
 
     }
 }

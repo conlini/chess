@@ -1,9 +1,6 @@
 package org.casestudy.chess.core;
 
-import org.casestudy.chess.constants.MovementDirection;
-import org.casestudy.chess.constants.PieceColor;
-import org.casestudy.chess.constants.PieceType;
-import org.casestudy.chess.constants.RookLocation;
+import org.casestudy.chess.constants.*;
 import org.casestudy.chess.pieces.*;
 
 import java.util.ArrayList;
@@ -25,54 +22,86 @@ public class Board implements ILayoutOwner {
     public MoveValidity isValidMove(Move nextMove, PieceColor pieceColor) {
         switch (nextMove.getMoveType()) {
             case Normal: {
-                NormalMove move = (NormalMove) nextMove;
-                if (move.getTargetSquare().getOccupiedPiece() != null && move.getTargetSquare().getOccupiedPiece().getPieceColor() == pieceColor) {
-                    return new MoveValidity(false, null);
-                }
-                PieceSet pieceSet = pieceSets.get(pieceColor);
-                List<Piece> pieces = pieceSet.getPieces(move.getPieceType());
-                List<Piece> possibleCandidates = new ArrayList<Piece>();
-                for (Piece piece : pieces) {
-
-                    if (!piece.isCaptured() && matchesDisambiguity(move, piece) && piece.canMoveToSquare(this, move.getTargetSquare())) {
-                        possibleCandidates.add(piece);
-                    }
-                }
-                if (possibleCandidates.isEmpty()) {
-                    return new MoveValidity(false, null);
-                }
-                Piece currentPiece = possibleCandidates.get(0);
-
-                if (isCheckValid(move, currentPiece, pieceColor) && isCaptureValid(move, currentPiece, pieceColor)) {
-                    return new MoveValidity(true, currentPiece);
-                } else {
-                    return new MoveValidity(false, currentPiece);
-                }
+                return getNormalMoveValidity((NormalMove) nextMove, pieceColor);
             }
             case Castling: {
-                CastlingMove cm = (CastlingMove) nextMove;
-                if (!hasKingMoved(pieceColor)) {
-                    switch (cm.getCastlingSide()) {
-                        case KingSide: {
-                            if (hasKingSideRookMoved(pieceColor)) {
-                                return new MoveValidity(false, null);
-                            } else {
-                                return new MoveValidity(true, null);
-                            }
-                        }
-                        case QueenSide: {
-                            if (hasQueenSideRookMoved(pieceColor)) {
-                                return new MoveValidity(false, null);
-                            } else {
-                                return new MoveValidity(true, null);
-                            }
-                        }
-                    }
-                }
+                return getCastlingMoveValidity((CastlingMove) nextMove, pieceColor);
 
             }
         }
         return new MoveValidity(false, null);
+    }
+
+    private MoveValidity getCastlingMoveValidity(CastlingMove nextMove, PieceColor pieceColor) {
+        CastlingMove cm = nextMove;
+        if (!hasKingMoved(pieceColor)) {
+            switch (cm.getCastlingSide()) {
+                case KingSide: {
+                    if (!hasKingSideRookMoved(pieceColor) && kingSideRookCanSwap(pieceColor)) {
+                        return new MoveValidity(true, null);
+                    } else {
+                        return new MoveValidity(false, null);
+                    }
+                }
+                case QueenSide: {
+                    if (!hasQueenSideRookMoved(pieceColor) && queenSideRookCanSwap(pieceColor)) {
+                        return new MoveValidity(true, null);
+                    } else {
+                        return new MoveValidity(false, null);
+                    }
+                }
+            }
+        }
+        return new MoveValidity(false, null);
+
+    }
+
+    private boolean kingSideRookCanSwap(PieceColor pieceColor) {
+        int[] columnMoves = new int[]{7, 6};
+        int row = pieceColor == PieceColor.White ? 1 : 8;
+        for (int i = 0; i < columnMoves.length; i++) {
+            if (isOccupied(row, columnMoves[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean queenSideRookCanSwap(PieceColor pieceColor) {
+        int[] columnMoves = new int[]{2, 3, 4};
+        int row = pieceColor == PieceColor.White ? 1 : 8;
+        for (int i = 0; i < columnMoves.length; i++) {
+            if (isOccupied(row, columnMoves[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private MoveValidity getNormalMoveValidity(NormalMove nextMove, PieceColor pieceColor) {
+        NormalMove move = nextMove;
+        if (move.getTargetSquare().getOccupiedPiece() != null && move.getTargetSquare().getOccupiedPiece().getPieceColor() == pieceColor) {
+            return new MoveValidity(false, null);
+        }
+        PieceSet pieceSet = pieceSets.get(pieceColor);
+        List<Piece> pieces = pieceSet.getPieces(move.getPieceType());
+        List<Piece> possibleCandidates = new ArrayList<Piece>();
+        for (Piece piece : pieces) {
+
+            if (!piece.isCaptured() && matchesDisambiguity(move, piece) && piece.canMoveToSquare(this, move.getTargetSquare())) {
+                possibleCandidates.add(piece);
+            }
+        }
+        if (possibleCandidates.isEmpty()) {
+            return new MoveValidity(false, null);
+        }
+        Piece currentPiece = possibleCandidates.get(0);
+
+        if (isCheckValid(move, currentPiece, pieceColor) && isCaptureValid(move, currentPiece, pieceColor)) {
+            return new MoveValidity(true, currentPiece);
+        } else {
+            return new MoveValidity(false, currentPiece);
+        }
     }
 
     private boolean matchesDisambiguity(NormalMove nextMove, Piece piece) {
@@ -139,26 +168,44 @@ public class Board implements ILayoutOwner {
                 if (targetSquare.getOccupiedPiece() != null) {
                     targetSquare.getOccupiedPiece().markCaptured();
                 }
-                targetSquare.setOccupiedPiece(targetPiece);
+                //targetSquare.setOccupiedPiece(targetPiece);
                 targetPiece.moveTo(targetSquare);
                 break;
             }
-            default: {
-                return;
+            case Castling: {
+                CastlingMove cm = (CastlingMove)nextMove;
+                Piece king = pieceSets.get(pieceColor).getPieces(PieceType.King).get(0);
+                Piece swapRook = null;
+                List<Piece> rooks = pieceSets.get(pieceColor).getPieces(PieceType.Rook);
+                RookLocation testLocation = cm.getCastlingSide() == CastlingSide.KingSide? RookLocation.KingSide:RookLocation.QueenSide;
+                for (Piece r : rooks) {
+                    Rook rook = (Rook) r;
+                    if (rook.getRookLocation() == testLocation) {
+                        swapRook = rook;
+                        break;
+                    }
+                }
+                int row = pieceColor == PieceColor.White ? 1 : 8;
+                int kingColumn = cm.getCastlingSide() == CastlingSide.KingSide?7:3;
+                int rookColumn = cm.getCastlingSide() == CastlingSide.KingSide?6:4;
+                king.getCurrentPlace().setOccupiedPiece(null);
+                swapRook.getCurrentPlace().setOccupiedPiece(null);
+                king.moveTo(places[row][kingColumn]);
+                swapRook.moveTo(places[row][rookColumn]);
+
+                break;
             }
         }
 
 
     }
 
-    // TODO 3. castling
     public boolean hasKingMoved(PieceColor pieceColor) {
         //get king, check return hasMoved
         Piece king = pieceSets.get(pieceColor).getPieces(PieceType.King).get(0);
         return king.isHasMoved();
     }
 
-    // TODO 3. castling
     public boolean hasKingSideRookMoved(PieceColor pieceColor) {
         // check if king side square is a rook and return hasMoved
         List<Piece> rooks = pieceSets.get(pieceColor).getPieces(PieceType.Rook);
@@ -171,7 +218,6 @@ public class Board implements ILayoutOwner {
         return false;
     }
 
-    // TODO 3. castling
     public boolean hasQueenSideRookMoved(PieceColor pieceColor) {
         // check if queen side square is a rook and return hasMoved
         List<Piece> rooks = pieceSets.get(pieceColor).getPieces(PieceType.Rook);

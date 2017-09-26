@@ -59,6 +59,7 @@ public abstract class Piece {
 
     public void moveTo(Square targetSquare) {
         this.currentPlace = targetSquare;
+        this.currentPlace.setOccupiedPiece(this);
         this.hasMoved = true;
     }
 
