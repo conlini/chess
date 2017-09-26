@@ -8,54 +8,55 @@ import org.casestudy.chess.core.Square;
 public class MoveUtil {
 
     public static boolean checkMoveDiagonal(Square currentPlace, Square targetSquare) {
-        Square currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentsquare.setX(currentsquare.getX() - 1);
-        currentsquare.setY(currentsquare.getY() - 1);
+        Square currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        // diagnol up left
+        currentsquare.setRow(currentsquare.getRow() - 1);
+        currentsquare.setColumn(currentsquare.getColumn() - 1);
         while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
             } else {
-                currentsquare.setX(currentsquare.getX() - 1);
-                currentsquare.setY(currentsquare.getY() - 1);
-            }
-        }
-
-        // diagonal down left
-        currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentsquare.setX(currentsquare.getX() - 1);
-        currentsquare.setY(currentsquare.getY() + 1);
-        while (isValidSquare(currentsquare)) {
-            if (currentsquare.equals(targetSquare)) {
-                return true;
-            } else {
-                currentsquare.setX(currentsquare.getX() - 1);
-                currentsquare.setY(currentsquare.getY() + 1);
+                currentsquare.setRow(currentsquare.getRow() - 1);
+                currentsquare.setColumn(currentsquare.getColumn() - 1);
             }
         }
 
         // diagonal down right
-        currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentsquare.setX(currentsquare.getX() + 1);
-        currentsquare.setY(currentsquare.getY() + 1);
+        currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentsquare.setRow(currentsquare.getRow() - 1);
+        currentsquare.setColumn(currentsquare.getColumn() + 1);
         while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
             } else {
-                currentsquare.setX(currentsquare.getX() + 1);
-                currentsquare.setY(currentsquare.getY() + 1);
+                currentsquare.setRow(currentsquare.getRow() - 1);
+                currentsquare.setColumn(currentsquare.getColumn() + 1);
             }
         }
 
-        // diagonal up right
-        currentsquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentsquare.setX(currentsquare.getX() + 1);
-        currentsquare.setY(currentsquare.getY() - 1);
+        // diagonal down right
+        currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentsquare.setRow(currentsquare.getRow() + 1);
+        currentsquare.setColumn(currentsquare.getColumn() + 1);
         while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
             } else {
-                currentsquare.setX(currentsquare.getX() + 1);
-                currentsquare.setY(currentsquare.getY() - 1);
+                currentsquare.setRow(currentsquare.getRow() + 1);
+                currentsquare.setColumn(currentsquare.getColumn() + 1);
+            }
+        }
+
+        // diagonal down left
+        currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentsquare.setRow(currentsquare.getRow() + 1);
+        currentsquare.setColumn(currentsquare.getColumn() - 1);
+        while (isValidSquare(currentsquare)) {
+            if (currentsquare.equals(targetSquare)) {
+                return true;
+            } else {
+                currentsquare.setRow(currentsquare.getRow() + 1);
+                currentsquare.setColumn(currentsquare.getColumn() - 1);
             }
         }
 
@@ -65,47 +66,47 @@ public class MoveUtil {
 
     public static boolean checkMoveLateral(Square currentPlace, Square targetSquare) {
 
-        // traverse left
-        Square currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentSquare.setX(currentSquare.getX() - 1);
+        // traverse down
+        Square currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentSquare.setRow(currentSquare.getRow() - 1);
         while (isValidSquare(currentSquare)) {
             if (currentSquare.equals(targetSquare)) {
                 return true;
             } else {
-                currentSquare.setX(currentSquare.getX() - 1);
-            }
-        }
-
-        // traverse right
-        currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentSquare.setX(currentSquare.getX() + 1);
-        while (isValidSquare(currentSquare)) {
-            if (currentSquare.equals(targetSquare)) {
-                return true;
-            } else {
-                currentSquare.setX(currentSquare.getX() + 1);
+                currentSquare.setRow(currentSquare.getRow() - 1);
             }
         }
 
         // traverse up
-        currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentSquare.setY(currentSquare.getY() - 1);
+        currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentSquare.setRow(currentSquare.getRow() + 1);
         while (isValidSquare(currentSquare)) {
             if (currentSquare.equals(targetSquare)) {
                 return true;
             } else {
-                currentSquare.setY(currentSquare.getY() - 1);
+                currentSquare.setRow(currentSquare.getRow() + 1);
             }
         }
 
-        // traverse down
-        currentSquare = new Square(currentPlace.getX(), currentPlace.getY());
-        currentSquare.setY(currentSquare.getY() + 1);
+        // traverse left
+        currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentSquare.setColumn(currentSquare.getColumn() - 1);
         while (isValidSquare(currentSquare)) {
             if (currentSquare.equals(targetSquare)) {
                 return true;
             } else {
-                currentSquare.setY(currentSquare.getY() + 1);
+                currentSquare.setColumn(currentSquare.getColumn() - 1);
+            }
+        }
+
+        // traverse right
+        currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentSquare.setColumn(currentSquare.getColumn() + 1);
+        while (isValidSquare(currentSquare)) {
+            if (currentSquare.equals(targetSquare)) {
+                return true;
+            } else {
+                currentSquare.setColumn(currentSquare.getColumn() + 1);
             }
         }
 
@@ -114,7 +115,7 @@ public class MoveUtil {
 
 
     public static boolean isValidSquare(Square square) {
-        if ((square.getX()  >= 1 && square.getX() <= 8) && (square.getY() >= 1 && square.getY() <= 8)) {
+        if ((square.getRow()  >= 1 && square.getRow() <= 8) && (square.getColumn() >= 1 && square.getColumn() <= 8)) {
             return true;
         }
         return false;

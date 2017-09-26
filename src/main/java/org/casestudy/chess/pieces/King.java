@@ -13,10 +13,10 @@ public class King extends Piece {
     }
 
     public boolean canMoveToSquare(Square targetSquare) {
-        int[] xmoves = new int[]{-1,0,1,-1,1,-1,0,-1};
-        int[] ymoves = new int[]{1,1,1,0,0,-1,-1,-1};
-        for (int i = 0; i < xmoves.length; i++) {
-            Square square = new Square(currentPlace.getX() + xmoves[i], currentPlace.getY() + ymoves[i]);
+        int[] columnMoves = new int[]{-1,0,1,-1,1,-1,0,-1};
+        int[] rowMoves = new int[]{1,1,1,0,0,-1,-1,-1};
+        for (int i = 0; i < columnMoves.length; i++) {
+            Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columnMoves[i]);
             if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
                 return true;
             }

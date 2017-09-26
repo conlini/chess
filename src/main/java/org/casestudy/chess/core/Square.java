@@ -6,28 +6,28 @@ import org.casestudy.chess.pieces.Piece;
  * Created by adityabhasin on 23/09/17.
  */
 public class Square {
-    private int x,y;
+    private int row, column;
     private Piece occupiedPiece;
 
-    public Square(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Square(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 
-    public int getX() {
-        return x;
+    public int getRow() {
+        return row;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public int getY() {
-        return y;
+    public int getColumn() {
+        return column;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setColumn(int column) {
+        this.column = column;
     }
 
     public Piece getOccupiedPiece() {
@@ -45,14 +45,14 @@ public class Square {
 
         Square square = (Square) o;
 
-        if (x != square.x) return false;
-        return y == square.y;
+        if (row != square.row) return false;
+        return column == square.column;
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
+        int result = row;
+        result = 31 * result + column;
         return result;
     }
 }

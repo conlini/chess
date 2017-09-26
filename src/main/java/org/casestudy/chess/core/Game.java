@@ -45,17 +45,18 @@ public class Game {
             Move move = MoveDecoder.decode(movestring);
             Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
             if (moveValidity.isValidMove()) {
-                board.move((NormalMove) move, currentPlayer, moveValidity.getTargetPiece());
+                board.move( move, currentPlayer, moveValidity.getTargetPiece());
                 this.moveList.add(move);
                 this.promoteNextPlayer();
                 this.printGameFEN();
-
             } else {
                 // report error
                 this.outputCollector.collectOutput(String.format("Invalid Move. Player %s, Move %s", this.currentPlayer.getColorCode(), movestring));
                 // promote the player for now as we need to handle tests
                 this.promoteNextPlayer();
             }
+
+
             movestring = moveGenerator.getNextMove();
         }
     }

@@ -13,15 +13,17 @@ public class CastlingMove extends Move {
     */
     private CastlingSide castlingSide;
 
-    public CastlingMove() {
+    public CastlingMove(String move) {
         super(MoveType.Castling);
+        if (move.equals("0-0")) {
+            this.castlingSide = CastlingSide.KingSide;
+        } else if (move.equals("0-0-0")) {
+            this.castlingSide = CastlingSide.QueenSide;
+        }
     }
 
     public CastlingSide getCastlingSide() {
         return castlingSide;
     }
 
-    public CastlingMove setCastlingSide(String castlingSide) {
-        return this;
-    }
 }

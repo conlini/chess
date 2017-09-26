@@ -77,7 +77,7 @@ Move has
 
     // TODO 1. this should be the actual square from the board either here or in the board.isValid/move
     public NormalMove setTargetSquare(String file, String rank) {
-        this.targetSquare = new Square((file.toCharArray()[0] - 'a') + 1, Integer.parseInt(rank));
+        this.targetSquare = new Square(Integer.parseInt(rank), (file.toCharArray()[0] - 'a') + 1);
         return this;
     }
 
@@ -96,7 +96,7 @@ Move has
             if (!rank.equals("")) {
                 rankInt = Integer.parseInt(rank);
             }
-            this.disAmbiguitySquare = new Square(fileInt, rankInt);
+            this.disAmbiguitySquare = new Square(rankInt, fileInt);
         }
         return this;
     }

@@ -19,7 +19,7 @@ public class MoveDecoder {
     public static Move decode(String moveString) {
         if (moveString.startsWith("0-0")) {
             // castling move
-            return new CastlingMove();
+            return new CastlingMove(moveString);
         } else {
 
             Matcher m = p.matcher(moveString);

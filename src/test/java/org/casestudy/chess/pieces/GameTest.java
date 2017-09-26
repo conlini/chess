@@ -55,11 +55,11 @@ public class GameTest {
         // en passant
         // castling
 
-        IMoveGenerator generator = new MockMoveProvider("e5", "e4", "d6", "Nf3",
-                "Bg4", "d4", "Bxf3", "d4xe5",
-                "d6xe5", "Qxf3", "Nf6", "Bc4", "Qe7", "Qb3",
-                "c6", "Nc3", "b5", "Bg5", "c6xb5", "Nxb5",
-                "Nd7", "Bxb5+", "Rd8", "0-0-0");
+        IMoveGenerator generator = new MockMoveProvider( "e4","e5", "Nf3", "d6",
+                 "d4","Bg4",  "d4xe5","Bxf3",
+                 "Qxf3", "d6xe5", "Bc4","Nf6", "Qb3", "Qe7",
+                 "Nc3","c6", "Bg5", "b5", "Nxb5", "c6xb5",
+                 "Bxb5+","Nd7", "0-0-0", "Rd8");
         MockMoveOutCollector collector = new MockMoveOutCollector();
         Game g = new Game(generator, collector);
         g.initGame();
