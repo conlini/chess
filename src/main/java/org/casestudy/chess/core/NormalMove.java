@@ -24,6 +24,7 @@ Move has
     private Square targetSquare;
     private boolean isAttemptToCapture;
     private boolean isAttemptToCheck;
+    private Square disAmbiguitySquare;
 
 
     public NormalMove() {
@@ -77,6 +78,26 @@ Move has
     // TODO 1. this should be the actual square from the board either here or in the board.isValid/move
     public NormalMove setTargetSquare(String file, String rank) {
         this.targetSquare = new Square((file.toCharArray()[0] - 'a') + 1, Integer.parseInt(rank));
+        return this;
+    }
+
+    public Square getDisAmbiguitySquare() {
+        return disAmbiguitySquare;
+    }
+
+    public NormalMove setDisambiguitySquare(String file, String rank) {
+        if (!file.equals("") || !rank.equals("")) {
+            int fileInt = 0;
+            if (!file.equals("")) {
+                fileInt = (file.toCharArray()[0] - 'a') + 1;
+            }
+
+            int rankInt = 0;
+            if (!rank.equals("")) {
+                rankInt = Integer.parseInt(rank);
+            }
+            this.disAmbiguitySquare = new Square(fileInt, rankInt);
+        }
         return this;
     }
 }

@@ -43,11 +43,11 @@ public class Board {
             List<Piece> possibleCandidates = new ArrayList<Piece>();
             for (Piece piece : pieces) {
 
-                if (!piece.isCaptured() && piece.canMoveToSquare(move.getTargetSquare())) {
+                if (!piece.isCaptured() && matchesDisambiguity(move, piece) && piece.canMoveToSquare(move.getTargetSquare())) {
                     possibleCandidates.add(piece);
                 }
             }
-            if(possibleCandidates.isEmpty()) {
+            if (possibleCandidates.isEmpty()) {
                 return new MoveValidity(false, null);
             }
             // assume for now that list has 1 item. We work out disambiguity later
@@ -63,6 +63,27 @@ public class Board {
         }
     }
 
+    private boolean matchesDisambiguity(NormalMove nextMove, Piece piece) {
+        if (nextMove.getDisAmbiguitySquare() == null) {
+            return true; // no disambuity value
+        }
+        if (nextMove.getDisAmbiguitySquare().getX() != 0 && nextMove.getDisAmbiguitySquare().getY() != 0) {
+            if (nextMove.getDisAmbiguitySquare().getX() == piece.getCurrentPlace().getX() &&
+                    nextMove.getDisAmbiguitySquare().getY() == piece.getCurrentPlace().getY()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (nextMove.getDisAmbiguitySquare().getY() != 0 &&
+                nextMove.getDisAmbiguitySquare().getY() == piece.getCurrentPlace().getY()) {
+            return true;
+        } else if (nextMove.getDisAmbiguitySquare().getX() != 0 &&
+                nextMove.getDisAmbiguitySquare().getX() == piece.getCurrentPlace().getX()) {
+            return true;
+        }
+        return false;
+    }
+
     private boolean isCheckValid(NormalMove move, Piece currentPiece, PieceColor pieceColor) {
         // get king of other color
         // check from target square if the king can be reached
@@ -72,7 +93,7 @@ public class Board {
             // temporary set the currentPieces postion to the target and test if we can achieve a check from there
             Square prev = currentPiece.getCurrentPlace();
             currentPiece.moveTo(move.getTargetSquare());
-            boolean answer =  currentPiece.canMoveToSquare(king.getCurrentPlace());
+            boolean answer = currentPiece.canMoveToSquare(king.getCurrentPlace());
             currentPiece.moveTo(prev);
             return answer;
         } else {
@@ -187,7 +208,7 @@ public class Board {
             } else {
                 board.append(row.toString());
             }
-            if(x != 8) {
+            if (x != 8) {
                 board.append("/");
             }
         }

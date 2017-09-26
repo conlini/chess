@@ -6,4 +6,6 @@ pending
 2. square[][] should be passed to "canMove" to verify for rook, queen, bishop if en-route square are not occupied
 3. fix "check" logic -- Done
 4. add castling logic
-5. throw unsupported move for disambiguity moves
+5. suport disambiguity - Done
+6. set expected output of test case
+7. fix the board print logic

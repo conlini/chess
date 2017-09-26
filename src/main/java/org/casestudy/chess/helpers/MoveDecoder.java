@@ -13,25 +13,35 @@ import java.util.regex.Pattern;
 public class MoveDecoder {
 
     // Patern - PieceType|Capture|File|Rank|Check
-    private static Pattern p = Pattern.compile("([KQBNR]?)(x?)([a-h])([1-8])(\\+?)");
+    //private static Pattern p = Pattern.compile("([KQBNR]?)(x?)([a-h])([1-8])(\\+?)");
+    private static Pattern p = Pattern.compile("([KQBNR]?)([a-h]?)([1-8]?)(x?)([a-h])([1-8])(\\+?)");
 
     public static Move decode(String moveString) {
         if (moveString.startsWith("0-0")) {
             // castling move
             return new CastlingMove();
         } else {
+
             Matcher m = p.matcher(moveString);
             if(m.find()) {
                 String pieceType = m.group(1);
-                String capture = m.group(2);
-                String file = m.group(3);
-                String rank = m.group(4);
-                String check = m.group(5);
-                return new NormalMove().setPieceType(m.group(1)).setAttemptToCapture(m.group(2)).
-                        setTargetSquare(m.group(3), m.group(4)).setAttemptToCheck(m.group(5));
+                String disFile = m.group(2);
+                String disRank = m.group(3);
+                String capture = m.group(4);
+                String file = m.group(5);
+                String rank = m.group(6);
+                String check = m.group(7);
+
+                return new NormalMove().setPieceType(pieceType).setAttemptToCapture(capture).
+                        setTargetSquare(file,rank).setAttemptToCheck(check).setDisambiguitySquare(disFile, disRank);
             }
         }
         return null;
     }
 
+    public static void main(String[] args) {
+        MoveDecoder.decode("d4");
+        MoveDecoder.decode("ed5");
+        MoveDecoder.decode("4d5");
+    }
 }
