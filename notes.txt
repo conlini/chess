@@ -4,6 +4,6 @@ pending
 
 1. move.target should point to actual board square for occupancy test
 2. square[][] should be passed to "canMove" to verify for rook, queen, bishop if en-route square are not occupied
-3. fix "check" logic
+3. fix "check" logic -- Done
 4. add castling logic
 5. throw unsupported move for disambiguity moves

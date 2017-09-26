@@ -69,7 +69,12 @@ public class Board {
         if (move.isAttemptToCheck()) {
             PieceColor other = pieceColor == PieceColor.White ? PieceColor.Black : PieceColor.White;
             Piece king = pieceSets.get(other).getPieces(PieceType.King).get(0);
-            return currentPiece.canMoveToSquare(king.getCurrentPlace());
+            // temporary set the currentPieces postion to the target and test if we can achieve a check from there
+            Square prev = currentPiece.getCurrentPlace();
+            currentPiece.moveTo(move.getTargetSquare());
+            boolean answer =  currentPiece.canMoveToSquare(king.getCurrentPlace());
+            currentPiece.moveTo(prev);
+            return answer;
         } else {
             return true;
         }
