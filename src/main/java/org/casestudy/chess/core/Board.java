@@ -97,11 +97,35 @@ public class Board implements ILayoutOwner {
         }
         Piece currentPiece = possibleCandidates.get(0);
 
-        if (isCheckValid(move, currentPiece, pieceColor) && isCaptureValid(move, currentPiece, pieceColor)) {
+        if (isCheckValid(move, currentPiece, pieceColor) && isCaptureValid(move, currentPiece, pieceColor) && isPromotionValid(move, currentPiece, pieceColor)) {
             return new MoveValidity(true, currentPiece);
         } else {
             return new MoveValidity(false, currentPiece);
         }
+    }
+
+    private boolean isPromotionValid(NormalMove move, Piece currentPiece, PieceColor pieceColor) {
+        if (move.getPromotedTo() == null) {
+            return true;
+        } else {
+            if (currentPiece.getPieceType() != PieceType.Pawn) {
+                return false;
+            } else {
+                switch (pieceColor) {
+                    case Black: {
+                        if (move.getTargetSquare().getRow() == 1) {
+                            return true;
+                        }
+                    }
+                    case White: {
+                        if (move.getTargetSquare().getRow() == 8) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private boolean matchesDisambiguity(NormalMove nextMove, Piece piece) {
@@ -152,7 +176,6 @@ public class Board implements ILayoutOwner {
     }
 
     // TODO: 2. Should move capture details like en passant and return that to the Game. Possible even return "Captured Piece Type info"
-    // TODO: 3. castling
     public void move(Move nextMove, PieceColor pieceColor, Piece targetPiece) {
         /*
         1. get target Piece
@@ -170,14 +193,17 @@ public class Board implements ILayoutOwner {
                 }
                 //targetSquare.setOccupiedPiece(targetPiece);
                 targetPiece.moveTo(targetSquare);
+                if (move.getPromotedTo() != null) {
+                    ((Pawn) targetPiece).promote(move.getPromotedTo());
+                }
                 break;
             }
             case Castling: {
-                CastlingMove cm = (CastlingMove)nextMove;
+                CastlingMove cm = (CastlingMove) nextMove;
                 Piece king = pieceSets.get(pieceColor).getPieces(PieceType.King).get(0);
                 Piece swapRook = null;
                 List<Piece> rooks = pieceSets.get(pieceColor).getPieces(PieceType.Rook);
-                RookLocation testLocation = cm.getCastlingSide() == CastlingSide.KingSide? RookLocation.KingSide:RookLocation.QueenSide;
+                RookLocation testLocation = cm.getCastlingSide() == CastlingSide.KingSide ? RookLocation.KingSide : RookLocation.QueenSide;
                 for (Piece r : rooks) {
                     Rook rook = (Rook) r;
                     if (rook.getRookLocation() == testLocation) {
@@ -186,8 +212,8 @@ public class Board implements ILayoutOwner {
                     }
                 }
                 int row = pieceColor == PieceColor.White ? 1 : 8;
-                int kingColumn = cm.getCastlingSide() == CastlingSide.KingSide?7:3;
-                int rookColumn = cm.getCastlingSide() == CastlingSide.KingSide?6:4;
+                int kingColumn = cm.getCastlingSide() == CastlingSide.KingSide ? 7 : 3;
+                int rookColumn = cm.getCastlingSide() == CastlingSide.KingSide ? 6 : 4;
                 king.getCurrentPlace().setOccupiedPiece(null);
                 swapRook.getCurrentPlace().setOccupiedPiece(null);
                 king.moveTo(places[row][kingColumn]);

@@ -14,14 +14,6 @@ public class Knight extends Piece {
     }
 
     public boolean canMoveToSquare(ILayoutOwner layoutOwner, Square targetSquare) {
-        int[] rowMoves = new int[]{-2, -2, -1, -1, 1, 1, 2, 2};
-        int[] columnMoves = new int[]{1, -1, 2, -2, 2, -2, 1, -1};
-        for (int i = 0; i < rowMoves.length; i++) {
-            Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columnMoves[i]);
-            if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
-                return true;
-            }
-        }
-        return false;
+        return MoveUtil.isKnightMoveValid(currentPlace, targetSquare);
     }
 }

@@ -14,8 +14,7 @@ import java.util.regex.Pattern;
 public class MoveDecoder {
 
     // Patern - PieceType|Capture|File|Rank|Check
-    //private static Pattern p = Pattern.compile("([KQBNR]?)(x?)([a-h])([1-8])(\\+?)");
-    private static Pattern p = Pattern.compile("([KQBNR]?)([a-h]?)([1-8]?)(x?)([a-h])([1-8])(\\+?)");
+    private static Pattern p = Pattern.compile("([KQBNR]?)([a-h]?)([1-8]?)(x?)([a-h])([1-8])([QBNR]?)(\\+?)");
 
     public static Move decode(String moveString, ILayoutOwner layoutOwner) {
         if (moveString.startsWith("0-0")) {
@@ -32,6 +31,7 @@ public class MoveDecoder {
                 String file = m.group(5);
                 String rank = m.group(6);
                 String check = m.group(7);
+                String promotedTo = m.group(8);
 
                 return new NormalMove().setPieceType(pieceType).setAttemptToCapture(capture).
                         setTargetSquare(file, rank, layoutOwner).setAttemptToCheck(check).setDisambiguitySquare(disFile, disRank);

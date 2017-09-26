@@ -13,75 +13,73 @@ public class Pawn extends Piece {
 
     private MovementDirection direction;
 
+    private boolean isPromoted;
+
+    private PieceType promotedPieceType;
+
     public Pawn(PieceColor pieceColor, MovementDirection movementDirection, Square current) {
         super(PieceType.Pawn, pieceColor, current);
         this.direction = movementDirection;
     }
 
     public boolean canMoveToSquare(ILayoutOwner layoutOwner, Square targetSquare) {
-        switch (direction) {
-            case Down: {
-                if (hasMoved) {
-                    int[] rowMoves = new int[]{1};
-                    int[] columntMoves = new int[]{0};
-                    for (int i = 0; i < columntMoves.length; i++) {
-                        Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columntMoves[i]);
-                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
-                            return true;
-                        }
-                    }
-                    if (validateCrossMove(targetSquare)) {
-                        return true;
-                    }
-                    return false;
-                    // x+1, y, x+1, y-1, x+1, y+1
-                } else {
-                    // x+1, y, x+1, y-1, x+1, y+1, x+2, y
-                    int[] rowMoves = new int[]{1, 2};
-                    int[] columnMoves = new int[]{0, 0};
-                    for (int i = 0; i < columnMoves.length; i++) {
-                        Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columnMoves[i]);
-                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
-                            return true;
-                        }
-                    }
-                    if (validateCrossMove(targetSquare)) {
-                        return true;
-                    }
-                    return false;
+        if (isPromoted) {
+            switch (promotedPieceType) {
+                case Knight: {
+                    return MoveUtil.isKnightMoveValid(this.currentPlace, targetSquare);
+
+                }
+                case Bishop: {
+                    return MoveUtil.checkMoveDiagonal(layoutOwner, this.currentPlace, targetSquare);
+                }
+                case Rook: {
+                    return MoveUtil.checkMoveLateral(layoutOwner, this.currentPlace, targetSquare);
+                }
+                case Queen: {
+                    return MoveUtil.isQueenMoveValid(layoutOwner, this.currentPlace, targetSquare);
                 }
             }
-            case Up: {
-                if (hasMoved) {
-                    // x-1, y, x-1, y-1, x-1, y+1
-                    int[] rowMoves = new int[]{-1};
-                    int[] columnMoves = new int[]{0};
-                    for (int i = 0; i < columnMoves.length; i++) {
-                        Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columnMoves[i]);
-                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
-                            return true;
-                        }
+        } else {
+            int[] rowMoves = null;
+            int[] columnMoves = null;
+            switch (direction) {
+                case Down: {
+                    if (hasMoved) {
+                        // x+1, y, x+1, y-1, x+1, y+1
+                        rowMoves = new int[]{1};
+                        columnMoves = new int[]{0};
+
+                    } else {
+                        // x+1, y, x+1, y-1, x+1, y+1, x+2, y
+                        rowMoves = new int[]{1, 2};
+                        columnMoves = new int[]{0, 0};
                     }
-                    if (validateCrossMove(targetSquare)) {
-                        return true;
+                    break;
+                }
+                case Up: {
+                    if (hasMoved) {
+                        // x-1, y, x-1, y-1, x-1, y+1
+                        rowMoves = new int[]{-1};
+                        columnMoves = new int[]{0};
+
+                    } else {
+                        // x-1, y, x+-1, y-1, x-1, y+1, x-2, y
+                        rowMoves = new int[]{-1, -2};
+                        columnMoves = new int[]{0, 0};
                     }
-                    return false;
-                } else {
-                    // x-1, y, x+-1, y-1, x-1, y+1, x-2, y
-                    int[] rowMoves = new int[]{-1, -2};
-                    int[] columnMoves = new int[]{0, 0};
-                    for (int i = 0; i < columnMoves.length; i++) {
-                        Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columnMoves[i]);
-                        if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
-                            return true;
-                        }
-                    }
-                    if (validateCrossMove(targetSquare)) {
-                        return true;
-                    }
-                    return false;
+                    break;
                 }
             }
+            for (int i = 0; i < columnMoves.length; i++) {
+                Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columnMoves[i]);
+                if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {
+                    return true;
+                }
+            }
+            if (validateCrossMove(targetSquare)) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
@@ -110,5 +108,10 @@ public class Pawn extends Piece {
             }
         }
         return false;
+    }
+
+    public void promote(PieceType promotedTo) {
+        this.isPromoted = true;
+        this.promotedPieceType = promotedTo;
     }
 }

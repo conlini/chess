@@ -14,7 +14,6 @@ public class Queen extends Piece {
     }
 
     public boolean canMoveToSquare(ILayoutOwner layoutOwner, Square targetSquare) {
-        return MoveUtil.checkMoveDiagonal(layoutOwner, currentPlace, targetSquare) ||
-                MoveUtil.checkMoveLateral(layoutOwner, currentPlace, targetSquare);
+        return MoveUtil.isQueenMoveValid(layoutOwner, this.currentPlace, targetSquare);
     }
 }

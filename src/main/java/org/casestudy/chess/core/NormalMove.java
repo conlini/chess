@@ -25,7 +25,11 @@ Move has
     private boolean isAttemptToCapture;
     private boolean isAttemptToCheck;
     private Square disAmbiguitySquare;
+    private PieceType promotedTo;
 
+    public PieceType getPromotedTo() {
+        return promotedTo;
+    }
 
     public NormalMove() {
         super(MoveType.Normal);
@@ -75,7 +79,6 @@ Move has
         return this;
     }
 
-    // TODO 1. this should be the actual square from the board either here or in the board.isValid/move
     public NormalMove setTargetSquare(String file, String rank, ILayoutOwner layoutOwner) {
         this.targetSquare = layoutOwner.getSquare(Integer.parseInt(rank), (file.toCharArray()[0] - 'a') + 1);
         return this;
@@ -97,6 +100,13 @@ Move has
                 rankInt = Integer.parseInt(rank);
             }
             this.disAmbiguitySquare = new Square(rankInt, fileInt);
+        }
+        return this;
+    }
+
+    public NormalMove setPromotionType(String promotedTo) {
+        if (!promotedTo.equals("")) {
+            this.promotedTo = PieceType.decode(promotedTo);
         }
         return this;
     }

@@ -10,7 +10,6 @@ import java.util.List;
  * Created by adityabhasin on 23/09/17.
  */
 
-//TODO: 3. castling
 public class Game {
 
     private final Board board;
