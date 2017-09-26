@@ -3,9 +3,10 @@ http://www.family-games-treasurehouse.com/sample_chess_game.html
 pending
 
 1. move.target should point to actual board square for occupancy test -- Done
-2. square[][] should be passed to "canMove" to verify for rook, queen, bishop if en-route square are not occupied
+2. square[][] should be passed to "canMove" to verify for rook, queen, bishop if en-route square are not occupied -- Done
 3. fix "check" logic -- Done
 4. add castling logic
 5. suport disambiguity - Done
 6. set expected output of test case -- Done
 7. fix the board print logic - Done
+8. add test for queen, bishop, rook

@@ -15,12 +15,12 @@ public class PiecesTest {
     public void testPawnMovement() {
         Piece pawn = new Pawn(PieceColor.White, MovementDirection.Down, new Square(4, 1));
         // can move 2 steps
-        Assert.assertTrue(pawn.canMoveToSquare(null, new Square(4, 3 )));
-        // can move 1 step right
-        Assert.assertTrue(pawn.canMoveToSquare(null, new Square(5, 2)));
-        pawn.moveTo(new Square(4, 3));
+        Assert.assertTrue(pawn.canMoveToSquare(null, new Square(6, 1 )));
+        // can not move 1 step right if no occupant
+        Assert.assertFalse(pawn.canMoveToSquare(null, new Square(5, 2)));
+        pawn.moveTo(new Square(6, 1));
         // verify can no longer move 2 steps
-        Assert.assertFalse(pawn.canMoveToSquare(null, new Square(4, 5)));
+        Assert.assertFalse(pawn.canMoveToSquare(null, new Square(8, 1)));
     }
 
     @Test

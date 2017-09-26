@@ -2,6 +2,7 @@ package org.casestudy.chess.pieces;
 
 import org.casestudy.chess.constants.PieceColor;
 import org.casestudy.chess.constants.PieceType;
+import org.casestudy.chess.core.ILayoutOwner;
 import org.casestudy.chess.core.Square;
 
 /**
@@ -24,7 +25,7 @@ public abstract class Piece {
         this.currentPlace.setOccupiedPiece(this);
     }
 
-    public abstract boolean canMoveToSquare(Square[][] places, Square targetSquare);
+    public abstract boolean canMoveToSquare(ILayoutOwner layoutOwner, Square targetSquare);
 
     public void markCaptured() {
         this.isCaptured = true;

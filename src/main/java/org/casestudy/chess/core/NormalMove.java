@@ -76,8 +76,8 @@ Move has
     }
 
     // TODO 1. this should be the actual square from the board either here or in the board.isValid/move
-    public NormalMove setTargetSquare(String file, String rank) {
-        this.targetSquare = new Square(Integer.parseInt(rank), (file.toCharArray()[0] - 'a') + 1);
+    public NormalMove setTargetSquare(String file, String rank, ILayoutOwner layoutOwner) {
+        this.targetSquare = layoutOwner.getSquare(Integer.parseInt(rank), (file.toCharArray()[0] - 'a') + 1);
         return this;
     }
 

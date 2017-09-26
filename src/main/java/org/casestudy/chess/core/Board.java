@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by adityabhasin on 23/09/17.
  */
 
-public class Board {
+public class Board implements ILayoutOwner {
 
     private Square[][] places = new Square[9][9];
     private Map<PieceColor, PieceSet> pieceSets;
@@ -23,21 +23,9 @@ public class Board {
 
 
     public MoveValidity isValidMove(Move nextMove, PieceColor pieceColor) {
-        /*
-        1. get current piece object --
-            a. identify via valid moves
-            b. identfy via disambiguity data
-        2. go to piece object and get valid moves
-        3. validate if the proposed move is applicable
-        4. Validate if the check is valid
-        5. validate if the capture is valid
-         */
-        // check if target square is occupied by the same color, if yes then dont bother computing canMove unless castling
         switch (nextMove.getMoveType()) {
             case Normal: {
                 NormalMove move = (NormalMove) nextMove;
-                // TODO FIXME this is a bad way to mark occupancy
-                move.getTargetSquare().setOccupiedPiece(places[move.getTargetSquare().getRow()][move.getTargetSquare().getColumn()].getOccupiedPiece());
                 if (move.getTargetSquare().getOccupiedPiece() != null && move.getTargetSquare().getOccupiedPiece().getPieceColor() == pieceColor) {
                     return new MoveValidity(false, null);
                 }
@@ -46,14 +34,13 @@ public class Board {
                 List<Piece> possibleCandidates = new ArrayList<Piece>();
                 for (Piece piece : pieces) {
 
-                    if (!piece.isCaptured() && matchesDisambiguity(move, piece) && piece.canMoveToSquare(places, move.getTargetSquare())) {
+                    if (!piece.isCaptured() && matchesDisambiguity(move, piece) && piece.canMoveToSquare(this, move.getTargetSquare())) {
                         possibleCandidates.add(piece);
                     }
                 }
                 if (possibleCandidates.isEmpty()) {
                     return new MoveValidity(false, null);
                 }
-                // assume for now that list has 1 item. We work out disambiguity later
                 Piece currentPiece = possibleCandidates.get(0);
 
                 if (isCheckValid(move, currentPiece, pieceColor) && isCaptureValid(move, currentPiece, pieceColor)) {
@@ -118,7 +105,7 @@ public class Board {
             // temporary set the currentPieces postion to the target and test if we can achieve a check from there
             Square prev = currentPiece.getCurrentPlace();
             currentPiece.moveTo(move.getTargetSquare());
-            boolean answer = currentPiece.canMoveToSquare(places, king.getCurrentPlace());
+            boolean answer = currentPiece.canMoveToSquare(this, king.getCurrentPlace());
             currentPiece.moveTo(prev);
             return answer;
         } else {
@@ -250,14 +237,14 @@ public class Board {
                     //row.append(1);
                     emptySlots++;
                 } else {
-                    if(emptySlots>0) {
+                    if (emptySlots > 0) {
                         row.append(emptySlots);
                         emptySlots = 0;
                     }
                     row.append(places[rown][column].getOccupiedPiece().getPieceTypeCode());
                 }
             }
-            if(emptySlots > 0) {
+            if (emptySlots > 0) {
                 row.append(emptySlots);
             }
             board.append(row.toString());
@@ -267,6 +254,18 @@ public class Board {
         }
 
         return board.toString();
+    }
+
+    public boolean isOccupied(int row, int column) {
+        return places[row][column].getOccupiedPiece() != null;
+    }
+
+    public Piece getOccupant(int row, int column) {
+        return places[row][column].getOccupiedPiece();
+    }
+
+    public Square getSquare(int row, int column) {
+        return places[row][column];
     }
 
 

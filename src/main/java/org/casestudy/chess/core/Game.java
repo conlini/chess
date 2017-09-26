@@ -30,19 +30,9 @@ public class Game {
 
 
     public void play() {
-        // get move from command line
-        /* decode move
-            1. get piece type // default to Pawn --- we need a move decoder
-            2. Identify and validate if Piece can move to this place - go to board with Move and player
-            3. if check - validate that check can be made
-            3.b if capture - validate that capture can be makde
-            4. update the board - udate piece location, update piece capture
-            5. update player status - promote next player
-          */
-
         String movestring = moveGenerator.getNextMove();
         while (movestring != null) {
-            Move move = MoveDecoder.decode(movestring);
+            Move move = MoveDecoder.decode(movestring, board);
             Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
             if (moveValidity.isValidMove()) {
                 board.move(move, currentPlayer, moveValidity.getTargetPiece());
@@ -58,8 +48,6 @@ public class Game {
                 // promote the player for now as we need to handle tests
                 this.promoteNextPlayer();
             }
-
-
             movestring = moveGenerator.getNextMove();
         }
     }

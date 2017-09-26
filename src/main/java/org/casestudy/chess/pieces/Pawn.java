@@ -3,6 +3,7 @@ package org.casestudy.chess.pieces;
 import org.casestudy.chess.constants.MovementDirection;
 import org.casestudy.chess.constants.PieceColor;
 import org.casestudy.chess.constants.PieceType;
+import org.casestudy.chess.core.ILayoutOwner;
 import org.casestudy.chess.core.Square;
 
 /**
@@ -17,7 +18,7 @@ public class Pawn extends Piece {
         this.direction = movementDirection;
     }
 
-    public boolean canMoveToSquare(Square[][] places, Square targetSquare) {
+    public boolean canMoveToSquare(ILayoutOwner layoutOwner, Square targetSquare) {
         switch (direction) {
             case Down: {
                 if (hasMoved) {

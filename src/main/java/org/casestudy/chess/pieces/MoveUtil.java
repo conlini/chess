@@ -1,5 +1,6 @@
 package org.casestudy.chess.pieces;
 
+import org.casestudy.chess.core.ILayoutOwner;
 import org.casestudy.chess.core.Square;
 
 /**
@@ -7,7 +8,7 @@ import org.casestudy.chess.core.Square;
  */
 public class MoveUtil {
 
-    public static boolean checkMoveDiagonal(Square[][] places, Square currentPlace, Square targetSquare) {
+    public static boolean checkMoveDiagonal(ILayoutOwner layoutOwner, Square currentPlace, Square targetSquare) {
         Square currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
         // diagnol up left
         currentsquare.setRow(currentsquare.getRow() - 1);
@@ -15,6 +16,8 @@ public class MoveUtil {
         while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
                 currentsquare.setRow(currentsquare.getRow() - 1);
                 currentsquare.setColumn(currentsquare.getColumn() - 1);
@@ -28,6 +31,8 @@ public class MoveUtil {
         while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
                 currentsquare.setRow(currentsquare.getRow() - 1);
                 currentsquare.setColumn(currentsquare.getColumn() + 1);
@@ -41,6 +46,8 @@ public class MoveUtil {
         while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
                 currentsquare.setRow(currentsquare.getRow() + 1);
                 currentsquare.setColumn(currentsquare.getColumn() + 1);
@@ -54,6 +61,8 @@ public class MoveUtil {
         while (isValidSquare(currentsquare)) {
             if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
                 currentsquare.setRow(currentsquare.getRow() + 1);
                 currentsquare.setColumn(currentsquare.getColumn() - 1);
@@ -64,49 +73,57 @@ public class MoveUtil {
 
     }
 
-    public static boolean checkMoveLateral(Square[][] places, Square currentPlace, Square targetSquare) {
+    public static boolean checkMoveLateral(ILayoutOwner layoutOwner, Square currentPlace, Square targetSquare) {
 
         // traverse down
-        Square currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
-        currentSquare.setRow(currentSquare.getRow() - 1);
-        while (isValidSquare(currentSquare)) {
-            if (currentSquare.equals(targetSquare)) {
+        Square currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentsquare.setRow(currentsquare.getRow() - 1);
+        while (isValidSquare(currentsquare)) {
+            if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
-                currentSquare.setRow(currentSquare.getRow() - 1);
+                currentsquare.setRow(currentsquare.getRow() - 1);
             }
         }
 
         // traverse up
-        currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
-        currentSquare.setRow(currentSquare.getRow() + 1);
-        while (isValidSquare(currentSquare)) {
-            if (currentSquare.equals(targetSquare)) {
+        currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentsquare.setRow(currentsquare.getRow() + 1);
+        while (isValidSquare(currentsquare)) {
+            if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
-                currentSquare.setRow(currentSquare.getRow() + 1);
+                currentsquare.setRow(currentsquare.getRow() + 1);
             }
         }
 
         // traverse left
-        currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
-        currentSquare.setColumn(currentSquare.getColumn() - 1);
-        while (isValidSquare(currentSquare)) {
-            if (currentSquare.equals(targetSquare)) {
+        currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentsquare.setColumn(currentsquare.getColumn() - 1);
+        while (isValidSquare(currentsquare)) {
+            if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
-                currentSquare.setColumn(currentSquare.getColumn() - 1);
+                currentsquare.setColumn(currentsquare.getColumn() - 1);
             }
         }
 
         // traverse right
-        currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
-        currentSquare.setColumn(currentSquare.getColumn() + 1);
-        while (isValidSquare(currentSquare)) {
-            if (currentSquare.equals(targetSquare)) {
+        currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
+        currentsquare.setColumn(currentsquare.getColumn() + 1);
+        while (isValidSquare(currentsquare)) {
+            if (currentsquare.equals(targetSquare)) {
                 return true;
+            } else if (layoutOwner.isOccupied(currentsquare.getRow(), currentsquare.getColumn())) {
+                break;
             } else {
-                currentSquare.setColumn(currentSquare.getColumn() + 1);
+                currentsquare.setColumn(currentsquare.getColumn() + 1);
             }
         }
 

@@ -1,6 +1,7 @@
 package org.casestudy.chess.helpers;
 
 import org.casestudy.chess.core.CastlingMove;
+import org.casestudy.chess.core.ILayoutOwner;
 import org.casestudy.chess.core.Move;
 import org.casestudy.chess.core.NormalMove;
 
@@ -16,7 +17,7 @@ public class MoveDecoder {
     //private static Pattern p = Pattern.compile("([KQBNR]?)(x?)([a-h])([1-8])(\\+?)");
     private static Pattern p = Pattern.compile("([KQBNR]?)([a-h]?)([1-8]?)(x?)([a-h])([1-8])(\\+?)");
 
-    public static Move decode(String moveString) {
+    public static Move decode(String moveString, ILayoutOwner layoutOwner) {
         if (moveString.startsWith("0-0")) {
             // castling move
             return new CastlingMove(moveString);
@@ -33,15 +34,11 @@ public class MoveDecoder {
                 String check = m.group(7);
 
                 return new NormalMove().setPieceType(pieceType).setAttemptToCapture(capture).
-                        setTargetSquare(file, rank).setAttemptToCheck(check).setDisambiguitySquare(disFile, disRank);
+                        setTargetSquare(file, rank, layoutOwner).setAttemptToCheck(check).setDisambiguitySquare(disFile, disRank);
             }
         }
         return null;
     }
 
-    public static void main(String[] args) {
-        MoveDecoder.decode("d4");
-        MoveDecoder.decode("ed5");
-        MoveDecoder.decode("4d5");
-    }
+
 }

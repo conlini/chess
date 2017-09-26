@@ -2,6 +2,7 @@ package org.casestudy.chess.pieces;
 
 import org.casestudy.chess.constants.PieceColor;
 import org.casestudy.chess.constants.PieceType;
+import org.casestudy.chess.core.ILayoutOwner;
 import org.casestudy.chess.core.Square;
 
 /**
@@ -12,7 +13,7 @@ public class Knight extends Piece {
         super(PieceType.Knight, pieceColor, current);
     }
 
-    public boolean canMoveToSquare(Square[][] places, Square targetSquare) {
+    public boolean canMoveToSquare(ILayoutOwner layoutOwner, Square targetSquare) {
         int[] rowMoves = new int[]{-2, -2, -1, -1, 1, 1, 2, 2};
         int[] columnMoves = new int[]{1, -1, 2, -2, 2, -2, 1, -1};
         for (int i = 0; i < rowMoves.length; i++) {
