@@ -27,7 +27,7 @@ public class PieceSet {
 
     public void addPiece(Piece piece) {
         List<Piece> typePieces = this.pieces.get(piece.getPieceType());
-        if(typePieces == null) {
+        if (typePieces == null) {
             typePieces = new ArrayList<Piece>();
             this.pieces.put(piece.getPieceType(), typePieces);
         }

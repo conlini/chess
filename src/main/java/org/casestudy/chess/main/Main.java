@@ -3,7 +3,6 @@ package org.casestudy.chess.main;
 import org.casestudy.chess.core.ConsoleMoveGenerator;
 import org.casestudy.chess.core.ConsoleOutputCollector;
 import org.casestudy.chess.core.Game;
-import org.casestudy.chess.core.IMoveGenerator;
 
 /**
  * Created by adityabhasin on 24/09/17.

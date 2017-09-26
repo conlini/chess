@@ -14,7 +14,7 @@ public class ConsoleMoveGenerator implements IMoveGenerator {
     }
 
     public String getNextMove() {
-        if(s.hasNext()) {
+        if (s.hasNext()) {
             return s.nextLine();
         }
         return null;

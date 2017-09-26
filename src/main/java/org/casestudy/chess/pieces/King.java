@@ -12,9 +12,9 @@ public class King extends Piece {
         super(PieceType.King, pieceColor, current);
     }
 
-    public boolean canMoveToSquare(Square targetSquare) {
-        int[] columnMoves = new int[]{-1,0,1,-1,1,-1,0,-1};
-        int[] rowMoves = new int[]{1,1,1,0,0,-1,-1,-1};
+    public boolean canMoveToSquare(Square[][] places, Square targetSquare) {
+        int[] columnMoves = new int[]{-1, 0, 1, -1, 1, -1, 0, -1};
+        int[] rowMoves = new int[]{1, 1, 1, 0, 0, -1, -1, -1};
         for (int i = 0; i < columnMoves.length; i++) {
             Square square = new Square(currentPlace.getRow() + rowMoves[i], currentPlace.getColumn() + columnMoves[i]);
             if (MoveUtil.isValidSquare(square) && square.equals(targetSquare)) {

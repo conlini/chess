@@ -1,6 +1,9 @@
 package org.casestudy.chess.core;
 
-import org.casestudy.chess.constants.*;
+import org.casestudy.chess.constants.MovementDirection;
+import org.casestudy.chess.constants.PieceColor;
+import org.casestudy.chess.constants.PieceType;
+import org.casestudy.chess.constants.RookLocation;
 import org.casestudy.chess.pieces.*;
 
 import java.util.ArrayList;
@@ -143,7 +146,7 @@ public class Board {
          */
         switch (nextMove.getMoveType()) {
             case Normal: {
-                NormalMove move = (NormalMove)nextMove;
+                NormalMove move = (NormalMove) nextMove;
                 targetPiece.getCurrentPlace().setOccupiedPiece(null);
                 Square targetSquare = this.places[move.getTargetSquare().getRow()][move.getTargetSquare().getColumn()];
                 if (targetSquare.getOccupiedPiece() != null) {
@@ -153,7 +156,7 @@ public class Board {
                 targetPiece.moveTo(targetSquare);
                 break;
             }
-            default:{
+            default: {
                 return;
             }
         }

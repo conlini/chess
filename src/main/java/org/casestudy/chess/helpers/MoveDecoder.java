@@ -23,7 +23,7 @@ public class MoveDecoder {
         } else {
 
             Matcher m = p.matcher(moveString);
-            if(m.find()) {
+            if (m.find()) {
                 String pieceType = m.group(1);
                 String disFile = m.group(2);
                 String disRank = m.group(3);
@@ -33,7 +33,7 @@ public class MoveDecoder {
                 String check = m.group(7);
 
                 return new NormalMove().setPieceType(pieceType).setAttemptToCapture(capture).
-                        setTargetSquare(file,rank).setAttemptToCheck(check).setDisambiguitySquare(disFile, disRank);
+                        setTargetSquare(file, rank).setAttemptToCheck(check).setDisambiguitySquare(disFile, disRank);
             }
         }
         return null;

@@ -12,7 +12,7 @@ public class Knight extends Piece {
         super(PieceType.Knight, pieceColor, current);
     }
 
-    public boolean canMoveToSquare(Square targetSquare) {
+    public boolean canMoveToSquare(Square[][] places, Square targetSquare) {
         int[] rowMoves = new int[]{-2, -2, -1, -1, 1, 1, 2, 2};
         int[] columnMoves = new int[]{1, -1, 2, -2, 2, -2, 1, -1};
         for (int i = 0; i < rowMoves.length; i++) {

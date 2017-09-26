@@ -45,7 +45,7 @@ public class Game {
             Move move = MoveDecoder.decode(movestring);
             Board.MoveValidity moveValidity = board.isValidMove(move, currentPlayer);
             if (moveValidity.isValidMove()) {
-                board.move( move, currentPlayer, moveValidity.getTargetPiece());
+                board.move(move, currentPlayer, moveValidity.getTargetPiece());
                 this.moveList.add(move);
                 this.promoteNextPlayer();
                 this.printGameFEN();

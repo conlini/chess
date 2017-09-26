@@ -24,7 +24,7 @@ public abstract class Piece {
         this.currentPlace.setOccupiedPiece(this);
     }
 
-    public abstract boolean canMoveToSquare(Square targetSquare);
+    public abstract boolean canMoveToSquare(Square[][] places, Square targetSquare);
 
     public void markCaptured() {
         this.isCaptured = true;
@@ -62,7 +62,7 @@ public abstract class Piece {
     }
 
     public String getPieceTypeCode() {
-        if(this.pieceColor == PieceColor.Black) {
+        if (this.pieceColor == PieceColor.Black) {
             return this.pieceType.getShortname().toLowerCase();
         } else {
             return this.pieceType.getShortname();

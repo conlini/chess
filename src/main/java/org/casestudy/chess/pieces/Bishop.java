@@ -12,7 +12,7 @@ public class Bishop extends Piece {
         super(PieceType.Bishop, pieceColor, current);
     }
 
-    public boolean canMoveToSquare(Square targetSquare) {
-        return MoveUtil.checkMoveDiagonal(currentPlace, targetSquare);
+    public boolean canMoveToSquare(Square[][] places, Square targetSquare) {
+        return MoveUtil.checkMoveDiagonal(places, currentPlace, targetSquare);
     }
 }

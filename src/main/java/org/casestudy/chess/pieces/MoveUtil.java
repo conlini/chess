@@ -7,7 +7,7 @@ import org.casestudy.chess.core.Square;
  */
 public class MoveUtil {
 
-    public static boolean checkMoveDiagonal(Square currentPlace, Square targetSquare) {
+    public static boolean checkMoveDiagonal(Square[][] places, Square currentPlace, Square targetSquare) {
         Square currentsquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
         // diagnol up left
         currentsquare.setRow(currentsquare.getRow() - 1);
@@ -64,7 +64,7 @@ public class MoveUtil {
 
     }
 
-    public static boolean checkMoveLateral(Square currentPlace, Square targetSquare) {
+    public static boolean checkMoveLateral(Square[][] places, Square currentPlace, Square targetSquare) {
 
         // traverse down
         Square currentSquare = new Square(currentPlace.getRow(), currentPlace.getColumn());
@@ -115,7 +115,7 @@ public class MoveUtil {
 
 
     public static boolean isValidSquare(Square square) {
-        if ((square.getRow()  >= 1 && square.getRow() <= 8) && (square.getColumn() >= 1 && square.getColumn() <= 8)) {
+        if ((square.getRow() >= 1 && square.getRow() <= 8) && (square.getColumn() >= 1 && square.getColumn() <= 8)) {
             return true;
         }
         return false;

@@ -16,8 +16,8 @@ public class Rook extends Piece {
         this.rookLocation = rookLocation;
     }
 
-    public boolean canMoveToSquare(Square targetSquare) {
-        return MoveUtil.checkMoveLateral(currentPlace, targetSquare);
+    public boolean canMoveToSquare(Square[][] places, Square targetSquare) {
+        return MoveUtil.checkMoveLateral(places, currentPlace, targetSquare);
     }
 
     public RookLocation getRookLocation() {

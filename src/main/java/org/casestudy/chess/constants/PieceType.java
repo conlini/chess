@@ -16,13 +16,13 @@ public enum PieceType {
     }
 
     public static PieceType decode(String shortName) {
-        if (shortName == null || shortName.equals("") ){
+        if (shortName == null || shortName.equals("")) {
             return Pawn;
         } else if (shortName.equals("R")) {
             return Rook;
         } else if (shortName.equals("N")) {
             return Knight;
-        } else if (shortName.equals("K")){
+        } else if (shortName.equals("K")) {
             return King;
         } else if (shortName.equals("Q")) {
             return Queen;

@@ -17,7 +17,7 @@ public class Pawn extends Piece {
         this.direction = movementDirection;
     }
 
-    public boolean canMoveToSquare(Square targetSquare) {
+    public boolean canMoveToSquare(Square[][] places, Square targetSquare) {
         switch (direction) {
             case Down: {
                 if (hasMoved) {
@@ -87,7 +87,7 @@ public class Pawn extends Piece {
 
     private boolean validateCrossMove(Square targetSquare) {
         int[] crossMovesRow = null;
-        switch(direction) {
+        switch (direction) {
             case Down: {
                 crossMovesRow = new int[]{1, 1};
                 break;
