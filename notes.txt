@@ -2,7 +2,6 @@ http://www.family-games-treasurehouse.com/sample_chess_game.html
 
 pending
 
-4. add castling logic
 9. en-passant
 10 fifty fifty rule
 11 promotions

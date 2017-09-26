@@ -53,7 +53,6 @@ public class GameTest {
         // play moves
         // normal move
         // check move
-        // en passant
         // castling
 
         IMoveGenerator generator = new MockMoveProvider("e4", "e5", "Nf3", "d6",
