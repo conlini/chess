@@ -15,26 +15,26 @@ public class PiecesTest {
     public void testPawnMovement() {
         Piece pawn = new Pawn(PieceColor.White, MovementDirection.Down, new Square(4, 1));
         // can move 2 steps
-        Assert.assertTrue(pawn.canMoveToSquare(new Square(4, 3 )));
+        Assert.assertTrue(pawn.canMoveToSquare(null, new Square(4, 3 )));
         // can move 1 step right
-        Assert.assertTrue(pawn.canMoveToSquare(new Square(5, 2)));
+        Assert.assertTrue(pawn.canMoveToSquare(null, new Square(5, 2)));
         pawn.moveTo(new Square(4, 3));
         // verify can no longer move 2 steps
-        Assert.assertFalse(pawn.canMoveToSquare(new Square(4, 5)));
+        Assert.assertFalse(pawn.canMoveToSquare(null, new Square(4, 5)));
     }
 
     @Test
     public void testKnightMovement() {
         Piece knight = new Knight(PieceColor.White, new Square(3,3));
-        Assert.assertTrue(knight.canMoveToSquare(new Square(4,5)));
-        Assert.assertFalse(knight.canMoveToSquare(new Square(6,6)));
+        Assert.assertTrue(knight.canMoveToSquare(null, new Square(4,5)));
+        Assert.assertFalse(knight.canMoveToSquare(null, new Square(6,6)));
     }
 
     @Test
     public void testKingMovement() {
         Piece king = new King(PieceColor.Black, new Square(2,3));
-        Assert.assertTrue(king.canMoveToSquare(new Square(3,4)));
-        Assert.assertFalse(king.canMoveToSquare(new Square(5,5)));
+        Assert.assertTrue(king.canMoveToSquare(null, new Square(3,4)));
+        Assert.assertFalse(king.canMoveToSquare(null, new Square(5,5)));
     }
 
     @Test

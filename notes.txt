@@ -7,5 +7,5 @@ pending
 3. fix "check" logic -- Done
 4. add castling logic
 5. suport disambiguity - Done
-6. set expected output of test case
-7. fix the board print logic
+6. set expected output of test case -- Done
+7. fix the board print logic - Done

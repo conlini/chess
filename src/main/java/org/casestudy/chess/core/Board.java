@@ -46,7 +46,7 @@ public class Board {
                 List<Piece> possibleCandidates = new ArrayList<Piece>();
                 for (Piece piece : pieces) {
 
-                    if (!piece.isCaptured() && matchesDisambiguity(move, piece) && piece.canMoveToSquare(move.getTargetSquare())) {
+                    if (!piece.isCaptured() && matchesDisambiguity(move, piece) && piece.canMoveToSquare(places, move.getTargetSquare())) {
                         possibleCandidates.add(piece);
                     }
                 }
@@ -118,7 +118,7 @@ public class Board {
             // temporary set the currentPieces postion to the target and test if we can achieve a check from there
             Square prev = currentPiece.getCurrentPlace();
             currentPiece.moveTo(move.getTargetSquare());
-            boolean answer = currentPiece.canMoveToSquare(king.getCurrentPlace());
+            boolean answer = currentPiece.canMoveToSquare(places, king.getCurrentPlace());
             currentPiece.moveTo(prev);
             return answer;
         } else {
@@ -242,23 +242,26 @@ public class Board {
 
     public String getBoardAsFEN() {
         StringBuilder board = new StringBuilder();
-        for (int rown = 1; rown < 9; rown++) {
+        for (int rown = 8; rown > 0; rown--) {
             StringBuilder row = new StringBuilder();
             int emptySlots = 0;
             for (int column = 1; column < 9; column++) {
                 if (places[rown][column].getOccupiedPiece() == null) {
-                    row.append(1);
+                    //row.append(1);
                     emptySlots++;
                 } else {
+                    if(emptySlots>0) {
+                        row.append(emptySlots);
+                        emptySlots = 0;
+                    }
                     row.append(places[rown][column].getOccupiedPiece().getPieceTypeCode());
                 }
             }
-            if (emptySlots == 8) {
-                board.append(8);
-            } else {
-                board.append(row.toString());
+            if(emptySlots > 0) {
+                row.append(emptySlots);
             }
-            if (rown != 8) {
+            board.append(row.toString());
+            if (rown != 1) {
                 board.append("/");
             }
         }

@@ -49,6 +49,9 @@ public class Game {
                 this.moveList.add(move);
                 this.promoteNextPlayer();
                 this.printGameFEN();
+                if (this.currentPlayer == PieceColor.White) {
+                    this.fullMoveCount += 1;
+                }
             } else {
                 // report error
                 this.outputCollector.collectOutput(String.format("Invalid Move. Player %s, Move %s", this.currentPlayer.getColorCode(), movestring));
@@ -95,9 +98,6 @@ public class Game {
 
     private void promoteNextPlayer() {
         this.currentPlayer = currentPlayer == PieceColor.White ? PieceColor.Black : PieceColor.White;
-        if (this.currentPlayer == PieceColor.White) {
-            this.fullMoveCount += 1;
-        }
     }
 
     private boolean canWhiteCastleKingSide() {
